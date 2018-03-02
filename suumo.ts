@@ -30,7 +30,7 @@ export class Suumo {
    * @returns {boolean}
    */
   static isValid(tweetData: OdnTweetData): boolean {
-    return tweetData.text.match(/^.*(スーモ|ｽｰﾓ).*$/gi) ? true : false;
+    return false === tweetData.isRetweet && tweetData.text.match(/^.*(スーモ|ｽｰﾓ).*$/gi) ? true : false;
   }
 }
 
