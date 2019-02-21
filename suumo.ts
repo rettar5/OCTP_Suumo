@@ -1,6 +1,7 @@
 import { OdnTweetData, OdnTweets } from "../../../odnTweets"
 import { OdnPlugins, OdnPluginResultData } from "../../../odnPlugins";
 import { Log, OdnUtils } from "../../../odnUtils";
+import {OdnMutualFollowers} from "../../../odnMutualFollowers";
 
 export class Suumo {
   constructor(private tweetData: OdnTweetData, private fullName: string) {}
@@ -30,7 +31,8 @@ export class Suumo {
    * @returns {boolean}
    */
   static isValid(tweetData: OdnTweetData): boolean {
-    return false === tweetData.isRetweet && tweetData.text.match(/^.*(スーモ|ｽｰﾓ).*$/gi) ? true : false;
+    const isMutualFollow = OdnMutualFollowers.isMutualFollow(tweetData.accountData.userId, tweetData.user.idStr);
+    return false === tweetData.isRetweet && isMutualFollow && tweetData.text.match(/^.*(スーモ|ｽｰﾓ).*$/gi) ? true : false;
   }
 }
 
